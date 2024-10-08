@@ -15,8 +15,8 @@ void addBeforeN(struct Node* head, Data value, int n);
 
 int removeFirst(struct Node** head);
 int removeLast(struct Node* head);
-int removeAfterN(struct Node* head);
-int removeBeforeN(struct Node* head);
+int removeAfterN(struct Node* head, int n);
+int removeBeforeN(struct Node* head, int n);
 
 void printList(struct Node* head);
 #endif
