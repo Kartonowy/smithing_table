@@ -1,6 +1,4 @@
 #include <iostream>
-#include <stdio.h>
-
 // 1. konstrkutor glowny
 // 2. kontruktor domyslny
 // 3. gettery i settery
@@ -38,11 +36,11 @@ class Point {
 };
 
 int main() {
-
     Point point1(34.5f, 34.5f);
     Point point2;
 
-    std::cout << point1.getX() << std::endl << point1.getY() << std::endl;
-    std::cout << point2.getX() << std::endl << point2.getY() << std::endl;
+    std::cout << point1.getX() << " " << point1.getY() << std::endl;
+    std::cout << point2.getX() << " " << point2.getY() << std::endl;
 
+    return 0;
 }
