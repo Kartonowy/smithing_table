@@ -1,46 +1,15 @@
 #include <iostream>
-// 1. konstrkutor glowny
-// 2. kontruktor domyslny
-// 3. gettery i settery
+#include "point.hpp"
 
-class Point {
-    private:
-        float x;
-        float y;
-    public:
-
-        void setX(float _x) {
-            x = _x;
-        }
-        float getX() {
-            return x;
-        }
-
-        void setY(float _y) {
-            y = _y;
-        }
-        float getY() {
-            return y;
-        }
-
-        Point(float _x, float _y) {
-            x = _x;
-            y = _y;
-        }
-        
-        Point() {
-            x = 0.0f;
-            y = 0.0f;
-        }
-
-};
 
 int main() {
     Point point1(34.5f, 34.5f);
     Point point2;
+    Point point3(point1);
 
     std::cout << point1.getX() << " " << point1.getY() << std::endl;
     std::cout << point2.getX() << " " << point2.getY() << std::endl;
+    std::cout << point3.getX() << " " << point3.getY() << std::endl;
 
     return 0;
 }
