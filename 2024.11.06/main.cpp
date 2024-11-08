@@ -36,8 +36,8 @@ class point {
             return point(p.x, p.y);
         };
 
-        friend std::ostream& operator<< (std::ostream& os, const point & p) {
-            os << p.x << " " << p.y << std::endl;
+        friend std::ostream & operator<< (std::ostream & os, const point & p) {
+            os << p.x << " " << p.y;
             return os;
         };
 
@@ -79,6 +79,14 @@ class polygon {
     point* verticies;
 
     public:
+        float calculateArea() {
+            // 2A = i = 1 => sum(p[i].x * (p[i-1].y - p[i+1]+1))
+            float sum = 0.0f;
+            for (int i = 1; i <= count; ++i) {
+                sum += verticies[i].getX() * (verticies[i-1].getY() - verticies[i+1].getY());
+            }
+            return sum / 2;
+        }
         void setVerticies(point* _verticies, int _count) {
             count = _count;
             verticies = _verticies;
@@ -100,7 +108,7 @@ class polygon {
             return polygon(p.verticies, p.count);
         };
 
-        friend std::ostream& operator<< (std::ostream& os, const polygon & p) {
+        friend std::ostream & operator<< (std::ostream & os, const polygon & p) {
             for (int i = 0; i < p.count; ++i) {
                 os << p.verticies[i]  << std::endl;
 
@@ -125,16 +133,16 @@ class polygon {
 
 int main() {
     auto a = point();
-    auto b = point(0.0f, 2.0f);
-    auto c = point(2.0f, 0.0f);
-    point verticies[3] = {a, b, c};
+    auto b = point(0.0f, 5.0f);
+    auto c = point(5.0f, 7.5f);
+    auto d = point(6.0f, 6.9f);
+    auto e = point(3.42f, 3.69f);
+    auto f = point(1.0f, 1.69f);
+    point verticies[] = {a, b, c, d, e, f};
 
     polygon poly = polygon(verticies, 3);
     
-    std::cout << b;
-    std::cout << verticies[1];
-    std::cout << poly[1];
-    std::cout << poly;
+    std::cout << poly.calculateArea();
 
     return 0;
 }
