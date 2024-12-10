@@ -15,10 +15,12 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    QLayout* layout;
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
     void createMenus();
+    void createCanvas();
 };
 #endif // MAINWINDOW_H
