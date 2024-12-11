@@ -3,6 +3,7 @@
 #include "QTextStream"
 #include "QDebug"
 #include "QImage"
+#include "QRegularExpression"
 
 Anymap::Anymap(Anymap_FILETYPE ft, int width, int height, int* content_ptr) {
     this->ft = ft;
@@ -83,4 +84,45 @@ QImage Anymap::P2(int winWidth, int winHeight) {
     QImage canvas = (new QImage(twoja, width , height , width,  QImage::Format_Grayscale8))
                         ->scaled(winWidth, winHeight, Qt::KeepAspectRatio);
     return canvas;
+}
+
+
+QImage Anymap::P3(int winWidth, int winHeight) {
+    QString Simage = "P3\n# 'P3' means this is a RGB color image in ASCII\n3 2\n255\n255   0   0\n0 255   0\n0   0 255\n255 255   0\n255 255 255\n0   0   0";
+    QList<QString> lines = Simage.split("\n");
+    lines.pop_front(); // pop format, dont care for now
+    lines.pop_front(); // pop comment, also dont care
+    qDebug() << lines;
+    QList<QString> Ssize = lines.takeFirst().split(" ");
+    const int width = Ssize[0].toInt();
+    const int height = Ssize[1].toInt();
+    qDebug() << "width: " << width << "height: " << height;
+    int max = lines.takeFirst().toInt();
+
+    uchar* twoja = new uchar[height * width * 3];
+    int index = 0;
+    for (int i = 0; i < height * 3; ++i) {
+        QStringList splitted = lines[i].split(QRegularExpression("\\s+"));
+        uchar buf[4] = {0, 0, 0, 255};
+        for (int nth = 0; nth < 3; ++nth) {
+            buf[2 - nth] = splitted[nth].toInt();
+        }
+        for (int j = 0; j < 4; ++j) {
+            twoja[index] = buf[j];
+            qDebug() << buf[j];
+            index++;
+        }
+    }
+
+    //for (int i = 0; i < width * height * 3; ++i) {
+    //    twoja[i] = (twoja[i] * 255 / max);
+    //}
+
+    qDebug() << new QImage(twoja, width, height, width,  QImage::Format_RGB32);
+
+    // QImage* canvas = new QImage(data, width, height, QImage::Format_Mono);
+    QImage canvas = (new QImage(twoja, width, height, width * 4,  QImage::Format_ARGB32))
+                        ->scaled(winWidth, winHeight, Qt::KeepAspectRatio);
+    return canvas;
+
 }

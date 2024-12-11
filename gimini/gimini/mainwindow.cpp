@@ -60,7 +60,7 @@ void MainWindow::createMenus() {
 }
 
 void MainWindow::createCanvas() {
-    QImage canvas = Anymap::P2(this->width(), this->height());
+    QImage canvas = Anymap::P3(this->width(), this->height());
     QLabel* label = new QLabel(this);
     label->setPixmap(QPixmap::fromImage(canvas));
     label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
